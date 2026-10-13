@@ -1,2 +1,0 @@
-# repositorioProjetoSite
-Desenvolvimento site responsivo
