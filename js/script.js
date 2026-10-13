@@ -11,4 +11,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
             navMenu.classList.remove("active");
         });
     });
+    //EStrutura carroussel
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dot = document.querySelectorAll(".dot");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    let slideAtual = 0;
+    let slideIntervalo;
+
+    function showSlide(index){
+        slides.forEach((slide) =>
+        slide.classList.remove("active"));
+        dot.forEach((dot) =>
+        dot.classList.remove("active"));
+
+        slideAtual = (index + slides.length)
+        % slides.length;
+        
+        slçides[slideAtual].classList.add("active");
+        dot[slideAtual].classList.add("active");
+    }
+
 });//Final função evento carregar todo HTML
