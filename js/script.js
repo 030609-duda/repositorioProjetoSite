@@ -22,14 +22,46 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function showSlide(index){
         slides.forEach((slide) =>
         slide.classList.remove("active"));
-        dot.forEach((dot) =>
-        dot.classList.remove("active"));
+        dot.forEach((dots) =>
+        dots.classList.remove("active"));
 
         slideAtual = (index + slides.length)
         % slides.length;
         
-        slçides[slideAtual].classList.add("active");
+        slides[slideAtual].classList.add("active");
         dot[slideAtual].classList.add("active");
     }
+
+    function nextSlide (){
+        showSlide(slideAtual + 1);
+    }
+
+    function prevSlide(){
+        showSlide (slideAtual - 1);
+    }
+
+    function startSlide(){
+        slideIntervalo = setInterval(nextSlide, 5000);
+    }
+
+    function stopSlide(){
+        clearInterval(slideIntervalo);
+    }
+
+    nextBtn.addEventListener("click", () =>{
+        nextSlide();
+        stopSlide();
+        startSlide();
+    });
+
+    prevBtn.addEventListener("click", () =>{
+        prevSlide();
+        stopSlide();
+        startSlide();
+    });
+
+    startSlide();
+
+
 
 });//Final função evento carregar todo HTML
