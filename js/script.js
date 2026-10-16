@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
     //EStrutura carroussel
     const slides = document.querySelectorAll(".carousel-slide");
-    const dot = document.querySelectorAll(".dot");
+    const dots = document.querySelectorAll(".dot");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
     let slideAtual = 0;
@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     function showSlide(index){
         slides.forEach((slide) =>
         slide.classList.remove("active"));
-        dot.forEach((dots) =>
+        dots.forEach((dots) =>
         dots.classList.remove("active"));
 
         slideAtual = (index + slides.length)
         % slides.length;
         
         slides[slideAtual].classList.add("active");
-        dot[slideAtual].classList.add("active");
+        dots[slideAtual].classList.add("active");
     }
 
     function nextSlide (){
@@ -59,7 +59,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
         stopSlide();
         startSlide();
     });
-
+    
+    //Dar funcionalidade para as bolinhas de navegação
+    dots.forEach((dot) =>{
+        dot.addEventListener("click",(e) =>{
+            const index = parseInt(e.target.getAttribute("data-index"));
+            showSlide(index);
+            stopSlide();
+            startSlide();
+        });
+    });
+    //Iniciar os slides de forma automática
     startSlide();
 
 
