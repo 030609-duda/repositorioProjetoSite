@@ -81,6 +81,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     contatoForm.addEventListener("submit",(event)=>{
         event.preventDefault();
 
+        //LImpar os erros a partir da segunda submissão
+        clearError();
+
         let isValid = true;
 
         //Validação campo nome (min 3 caracteres)
@@ -98,33 +101,66 @@ document.addEventListener("DOMContentLoaded", ()=>{
         //Validação campo mensagem
         if(mensagem.value.trim().length < 10)
         {
-            shoeErro(mensagem, "A mensagem deve ter no mínimo 10 caracteres.")
+            showErro(mensagem, "A mensagem deve ter no mínimo 10 caracteres.")
             isValid = false;
         }
 
         if(isValid){
             clearError();
-            alert("Mensagem enviada com sucesso");
+            showToast("Mensagem enviada com sucesso");
             contatoForm.reset();
         }
     });
 
-    function idEmailValid (email)
+    function showToast(mensagemCadastro){
+        const toast = document.getElementById("toast");
+        const toastMensagem = document.getElementById("toastMensagem");
+        toastMensagem.textContent = mensagemCadastro;
+        toast.classList.add("show");
+        setTimeout(() =>{
+            toast.classList.remove("show");
+        }, 3000);
+
+    }
+
+    function isEmailValid (email)
     {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailRegex.text(email);
+        return emailRegex.test(email);
     }
+    
+    //Remover a borda vermelha nos inputs
+    [nome, email, mensagem].forEach((input) =>{
+        input.addEventListener("input", () =>{
+            clearFieldError(input);
+        });
+    });
 
     function showErro(inputElement, mensagem)
     {
         const formGroup = inputElement.parentElement;
-        clarFieldError(inputElement);
+        clearFieldError(inputElement);
+        inputElement.classList.add("input-error");
         const erroMensagem = document.createElement("small");
         erroMensagem.className = "error-text";
         erroMensagem.innerText = mensagem;
         formGroup.appendChild(erroMensagem);
     }
 
+    function clearFieldError(inputElement){
+        const formGroup = inputElement.parentElement;
 
+        inputElement.classList.remove("input-error");
+        const removerErro = formGroup.querySelector(".error-text");
+        if(removerErro){
+            removerErro.remove();
+        }
+    }
 
+    //Remover erro dos campos de forma indivídual
+    function clearError(){
+        document.querySelectorAll(".error-text").forEach((el) => el.remove());
+    //Remover erro de todos os campos
+        document.querySelectorAll(".input-error").forEach((el) => el.classList.remove("input-error"));
+    }
 });//Final função evento carregar todo HTML
